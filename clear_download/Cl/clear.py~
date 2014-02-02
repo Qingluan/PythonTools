@@ -1,0 +1,10 @@
+from os import popen 
+import re
+
+PATH = "~/Downloads/ "
+comandDisItems = "ls " + PATH
+
+list = popen(comandDisItems)
+
+def check_tar_gz(file_name):
+    pattern = re.compile(r'\.tar\.gz$|\.tar\.bz2$')
