@@ -6,7 +6,8 @@ import sys
 import gzip
 from functools import reduce
 from threading import Event , Thread ,currentThread
-from time import asctime ,time
+from time import asctime ,time 
+
 try:
 	from sound_tool import Sound 
 except ImportError:
@@ -17,6 +18,14 @@ try:
 	from colorlib import color
 except ImportError:
 	pass
+
+### template
+from template import TemplateFactory
+from  template_generater import Factory
+from record import Write 
+from record import utils_check
+
+
 
 #Speak_words_list = None  # this argc is for 'sound' thread to use.
 
@@ -231,7 +240,10 @@ class load_Sound_thread(Thread):
 		sound_thread.say()
 
 
+
 if __name__ == "__main__":
+	
+
 	print()
 #	word = input(">> Search > ")
 #	google = "http://translate.google.cn/translate_a/t?client=t&sl=auto&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&uptl=zh-CN&alttl=en&oc=2&otf=2&ssel=3&tsel=0&q="
@@ -255,6 +267,15 @@ if __name__ == "__main__":
  
 	a = GoogleTranslateLib(real)
 	res = a.get()
+
+	####### write to a file 
+	file_tem = TemplateFactory()
+	time_info = utils_check.get_today_time()
+	templateFac = Factory(time_info,res)
+	templateRes = templateFac.generater()
+	Write.Log(file_tem.out,templateRes)
+	########################
+	
 	try:
 		b = color('blue')
 		print (b.get_color(res))
